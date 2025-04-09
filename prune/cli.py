@@ -106,7 +106,13 @@ class _CorePruneCommand(Command):
         # self.name drives the Locker push mode.
         #   - dry-run translates to locker no-push mode
         #   - push-remote translates to locker full-remote mode
-        locker_args = [args.locker, args.creds, self.name, gitconfig, args.clone_shallow_since_days]
+        locker_args = [
+            args.locker,
+            args.creds,
+            self.name,
+            gitconfig,
+            args.clone_shallow_since_days,
+        ]
         local_locker_path = None
         evidences = args.config
         if not evidences:
@@ -127,7 +133,9 @@ class _CorePruneCommand(Command):
         self.out(self.outro_msg)
         self._remove_locker(local_locker_path)
 
-    def _get_locker(self, repo, creds, mode, gitconfig=None, clone_shallow_since_days=None):
+    def _get_locker(
+        self, repo, creds, mode, gitconfig=None, clone_shallow_since_days=None
+    ):
         local_locker_path = f"{tempfile.gettempdir()}/prune"
         if os.path.isdir(local_locker_path):
             self.out("Local locker found...")
